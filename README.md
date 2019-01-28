@@ -1,24 +1,14 @@
-# README
+# Ruby on Rails application with Comet Chat Pro
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Getting Started
+- `rails new cometchatpro`
+- `rails generate model User name:string ccp_id:string profile_url:string avatar_url:string`
+- Add API key and App ID from Comet Chat to `.env` file; add `dotenv-rails` to Gemfile; `bundle`.
 
-Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## To do
+- Add "create user" form so we can make new users.
+- Make post requests when you create users to CometChat to get UUIDs for them.
+- Basic styling
+- Install chat, use forms to send messages
+- Get messages via form.
