@@ -1,0 +1,15 @@
+<div>Yo, it's the new user page!</div>
+
+<%= form_for @user do |form| %>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+  <% if @error %>
+    <p><%= @error %></p>
+  <% end %>
+<% end %>
