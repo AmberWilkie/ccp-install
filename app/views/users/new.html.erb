@@ -9,7 +9,7 @@
   <p>
     <%= form.submit %>
   </p>
-  <% if @error %>
-    <p><%= @error %></p>
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
   <% end %>
 <% end %>

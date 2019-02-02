@@ -10,8 +10,9 @@
 
 
 ## To do
-- Add "create user" form so we can make new users.
-- Make post requests when you create users to CometChat to get UUIDs for them.
-- Basic styling
+- ~~Add "create user" form so we can make new users.~~
+- ~~Make post requests when you create users to CometChat to get UUIDs for them.~~
+- List users, create chat page
 - Install chat, use forms to send messages
 - Get messages via form.
+- Basic styling

@@ -5,11 +5,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if user.save
+    if user.save && CometChatService.new(user).request_uid
       message = 'Your user was saved. You are ready to start chatting!'
       redirect_to @user, alert: message
     else
-      @error = 'Sorry, that did not work'
+      message = 'Sorry, that did not work'
+      redirect_to new_user_path, alert: message
     end
   end
 
