@@ -2,3 +2,67 @@
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
+<div id="messages"></div>
+
+<script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat/CometChat.js"></script>
+
+<script type="text/javascript">
+    window.onload = (function () {
+        // window scoped variable called `CometChat` is created.
+    })
+</script>
+
+<script type="text/javascript" src="https://unpkg.com/@cometchat-pulse/cometchat-pulse.js/CometChat.js"></script>
+
+<script type="text/javascript">
+    window.onload = (function () {
+        const appId = '<%= @app_id %>';
+        const apiKey = '<%= @api_key %>';
+        CometChat.init(appId).then(
+            hasInitialized => {
+                console.log("Initialization completed successfully", hasInitialized);
+                CometChat.login(<%= @user.id %>, apiKey).then(
+                    User => {
+                        console.log("Login Successful:", {User});
+                        var UID = '<%= @user.id %>';
+                        var limit = 30;
+
+                        var messagesRequest = new CometChat.MessagesRequestBuilder().setUID(UID).setLimit(limit).build();
+
+                        messagesRequest.fetchPrevious().then(
+                            messages => {
+                                console.log("Message list fetched:", messages);
+                                document.getElementById('messages').innerHTML = "<div>Hey there was a message</div>"
+                            },
+                            error => {
+                                console.log("Message fetching failed with error:", error);
+                            }
+                        );
+                        var messageText = "Hello world!";
+                        var messageType = CometChat.MESSAGE_TYPE.TEXT;
+                        var receiverType = CometChat.RECEIVER_TYPE.USER;
+                        var textMessage = new CometChat.TextMessage('20', messageText, messageType, receiverType);
+
+                        // CometChat.sendMessage(textMessage).then(
+                        //     message => {
+                        //         console.log("Message sent successfully:", message);
+                        //         // Text Message Sent Successfully
+                        //     },
+                        //     error => {
+                        //         console.log("Message sending failed with error:", error);
+                        //     }
+                        // );
+                    },
+                    error => {
+                        console.log("Login failed with exception:", {error});
+                        // User login failed, check error and take appropriate action.
+                    }
+                )
+            },
+            error => {
+                console.log("Initialization failed with error:", error);
+                //Check the reason for error and take apppropriate action.
+            }
+    );
+    })
+</script>
