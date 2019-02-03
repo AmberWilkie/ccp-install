@@ -9,6 +9,13 @@
   <%= f.submit 'Send message' %>
 <% end %>
 
+<% @users.each do |user| %>
+  <div id="<%= user[1] %>" name="user-select">
+    <%= user[0] %>
+  </div>
+<% end %>
+
+<h1>Messages</h1>
 <div id="messages">
   Messages loading...
 </div>
@@ -27,27 +34,33 @@
     window.onload = (function () {
         const appId = '<%= @app_id %>';
         const apiKey = '<%= @api_key %>';
+
         CometChat.init(appId).then(
             hasInitialized => {
                 console.log("Initialization completed successfully", hasInitialized);
+                const fetchMessages = id => {
+                    const limit = 30;
+                    const messagesRequest = new CometChat.MessagesRequestBuilder().setUID(id).setLimit(limit).build();
+
+                    messagesRequest.fetchPrevious().then(
+                        messages => {
+                            console.log("Message list fetched: ", messages);
+                            const messageDiv = document.getElementById('messages')
+                            messageDiv.innerHTML = messages.map(msg => `<div>${msg.data.text}</div>`).join('')
+                        },
+                        error => {
+                            console.log("Message fetching failed with error:", error);
+                        }
+                    );
+                }
+
+                const users = document.getElementsByName('user-select')
+                users.forEach(u => u.addEventListener("click", e => fetchMessages(e.target.id)));
+
                 CometChat.login(<%= @user.id %>, apiKey).then(
                     User => {
                         console.log("Login Successful:", {User});
-                        var UID = '<%= @user.id %>';
-                        var limit = 30;
-
-                        var messagesRequest = new CometChat.MessagesRequestBuilder().setUID(UID).setLimit(limit).build();
-
-                        messagesRequest.fetchPrevious().then(
-                            messages => {
-                                console.log("Message list fetched: ", messages);
-                                const messageDiv = document.getElementById('messages')
-                                messageDiv.innerHTML = messages.map(msg => `<div>${msg.data.text}</div>`).join('')
-                            },
-                            error => {
-                                console.log("Message fetching failed with error:", error);
-                            }
-                        );
+                        fetchMessages(<%= @users.first[1] %>)
                     },
                     error => {
                         console.log("Login failed with exception:", {error});
@@ -60,7 +73,9 @@
                 //Check the reason for error and take apppropriate action.
             }
         );
+
     });
+
     const sendMessage = () => {
         const recipient_id = document.getElementsByName('recipient')[0].value;
         const message_text = document.getElementsByName('message[text]')[0].value;

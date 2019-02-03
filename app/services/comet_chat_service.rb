@@ -1,6 +1,6 @@
 class CometChatService
   include HTTParty
-  BASE_URI = 'https://api.cometchat.com/v1'
+  BASE_URI = 'https://api.cometchat.com/v1'.freeze
 
   def initialize(user)
     @user = user
