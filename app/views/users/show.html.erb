@@ -19,9 +19,9 @@
 
 <h1>Messages</h1>
 <div id="message-container">
-<div id="messages">
-  Messages loading...
-</div>
+  <div id="messages">
+    Messages loading...
+  </div>
 </div>
 
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat/CometChat.js"></script>
@@ -35,6 +35,7 @@
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pulse/cometchat-pulse.js/CometChat.js"></script>
 
 <script type="text/javascript">
+    const messageDiv = document.getElementById('messages')
     window.onload = (function () {
         const appId = '<%= @app_id %>';
         const apiKey = '<%= @api_key %>';
@@ -49,7 +50,6 @@
                     messagesRequest.fetchPrevious().then(
                         messages => {
                             console.log("Message list fetched: ", messages);
-                            const messageDiv = document.getElementById('messages')
                             messageDiv.innerHTML = messages.map(msg => `<div>${msg.text}</div>`).join('')
                         },
                         error => {
@@ -101,7 +101,6 @@
     }
 
     const displayNewMessage = message => {
-        const messageDiv = document.getElementById('messages')
         const newNode = document.createElement("div")
         newNode.innerHTML = message.text
         messageDiv.appendChild(newNode)
@@ -119,6 +118,7 @@
         CometChat.sendMessage(textMessage).then(
             message => {
                 console.log("Message sent successfully:", message);
+                displayNewMessage(message)
                 // Text Message Sent Successfully
             },
             error => {
