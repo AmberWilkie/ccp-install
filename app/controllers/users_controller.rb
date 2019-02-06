@@ -19,8 +19,6 @@ class UsersController < ApplicationController
     @users = CometChatService.new(user).fetch_users
                              .reject { |u| u['uid'] == @user.id.to_s }
                              .map { |u| [u['name'], u['uid']] }
-    @app_id = ENV['COMETCHAT_APP_ID']
-    @api_key = ENV['COMETCHAT_API_KEY']
   end
 
   private
