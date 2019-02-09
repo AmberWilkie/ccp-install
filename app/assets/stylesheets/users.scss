@@ -20,6 +20,11 @@
   display: flex;
   flex-direction: column;
   width: 20rem;
+  padding: .5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: slategrey;
+  background-color: lightblue;
 }
 
 .right-column {
@@ -28,6 +33,51 @@
   flex-direction: column;
 }
 
-.selected-user {
-  background-color: greenyellow;
+.message-container {
+  background-color: lightgray;
+  padding: 1rem;
+  border-radius: .5rem;
+  margin-left: 1rem;
+}
+
+.messages {
+  height: 25rem;
+  overflow-y: scroll;
+}
+
+.message {
+  border-radius: 4px;
+  padding: .3rem;
+  background-color: antiquewhite;
+  color: darkslategray;
+  margin-bottom: .2rem;
+  width: max-content;
+}
+
+.message-text {
+
+}
+
+.message-sender {
+  font-size: .6rem;
+}
+
+.user.selected-user {
+  color: slategrey;
+  background-color: lightblue;
+  border: 0;
+}
+
+.user {
+  border: 2px solid darkgray;
+  border-radius: 4px;
+  padding: .3rem;
+  background-color: dimgray;
+  color: lightgray;
+  margin-bottom: .2rem;
+
+  &:hover {
+    background-color: orange;
+    color: dimgray;
+  }
 }

@@ -1,6 +1,9 @@
-const displayNewMessage = message => {
+const displayNewMessage = msg => {
     const newNode = document.createElement("div")
-    newNode.innerHTML = message.text
+    newNode.innerHTML = `<div class='message'>
+                        <div class='message-text'>${msg.text}</div>
+                        <div class='message-sender'>- ${msg.sender.name}</div>
+                       </div>`
     const messageDiv = document.getElementById('messages')
     messageDiv.appendChild(newNode)
 }
@@ -47,7 +50,7 @@ const setUser = id => {
     const previousDivs = Array.from(document.getElementsByClassName('selected-user'))
     previousDivs.forEach(div => div.className = div.className.replace(/\bselected-user\b/,''))
     const userDiv = document.getElementById(id)
-    userDiv.className += 'selected-user'
+    userDiv.className += ' selected-user'
 }
 
 const fetchMessages = id => {
@@ -57,9 +60,13 @@ const fetchMessages = id => {
     messagesRequest.fetchPrevious().then(
         messages => {
             const messageDiv = document.getElementById('messages')
+        console.log(messages)
             messageDiv.innerHTML = messages.length > 0 ?
-              messages.map(msg => `<div>${msg.text}</div>`).join('') :
-              `<div class="whisper">'Start of message history'</div>`
+              messages.map(msg => `<div class='message'>
+                    <div class='message-text'>${msg.text}</div>
+                    <div class='message-sender'>- ${msg.sender.name}</div>
+                   </div>`).join('') :
+              `<div class="whisper">Start of message history</div>`
         },
         error => {
             console.log("Message fetching failed with error:", error);

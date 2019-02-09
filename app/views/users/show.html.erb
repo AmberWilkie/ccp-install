@@ -9,22 +9,22 @@
   <div class="main-body">
     <div class="left-column">
       <% @users.each do |user| %>
-        <div id="<%= user[1] %>" name='user-select'>
+        <div id="<%= user[1] %>" name='user-select' class="user">
           <%= user[0] %>
         </div>
       <% end %>
     </div>
 
     <div class="right-column">
-      <div id="message-container">
-        <div id="messages">
+      <div id="message-container" class="message-container">
+        <div id="messages" class="messages">
           Messages loading...
         </div>
-      </div>
-      <%= form_for :message, :html => { :onsubmit => 'sendMessage();' } do |f| %>
+      <%= form_for :message, remote: true do |f| %>
         Message : <%= f.text_area :text %><br/>
-        <%= f.submit 'Send message' %>
+        <%= button_tag "Send Message", :type => 'button', :onclick => "javascript:sendMessage()"%>
       <% end %>
+      </div>
     </div>
   </div>
 </div>
