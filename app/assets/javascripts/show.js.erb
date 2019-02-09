@@ -1,0 +1,90 @@
+window.onload = (function () {
+    initializeChat();
+})
+
+const displayNewMessage = message => {
+    const newNode = document.createElement("div")
+    newNode.innerHTML = message.text
+    const messageDiv = document.getElementById('messages')
+    messageDiv.appendChild(newNode)
+}
+
+const addMessageListener = () => {
+    CometChat.addMessageListener(
+        'listener_id',
+        new CometChat.MessageListener({
+            onTextMessageReceived: textMessage => displayNewMessage(textMessage),
+            onMediaMessageReceived: mediaMessage => {
+        console.log("Media message received successfully", mediaMessage);
+    }
+})
+);
+}
+
+const loginUser = () => {
+    const id = document.getElementById('user-id').dataset.id;
+    console.log(id);
+    CometChat.login(id, '<%= ENV['COMETCHAT_API_KEY'] %>').then(
+        User => {
+        fetchMessages(<%= (@users || []).first&.second %>);
+    addMessageListener()
+},
+    error => {
+        console.log("Login failed with exception:", {error});
+    }
+)
+}
+
+const initializeChat = () => {
+    CometChat.init('<%= ENV['COMETCHAT_APP_ID'] %>').then(
+        hasInitialized => {
+            const users = document.getElementsByName('user-select')
+            users.forEach(u => u.addEventListener("click", e => {
+                fetchMessages(e.target.id);
+                setUser(e.target.id)
+            }));
+
+            loginUser()
+        },
+        error => {
+            console.log("Initialization failed with error:", error);
+        }
+    )};
+
+const setUser = id => {
+    const previousDivs = Array.from(document.getElementsByClassName('selected-user'))
+    previousDivs.forEach(div => div.className = div.className.replace(/\bselected-user\b/,''))
+    const userDiv = document.getElementById(id)
+    userDiv.className += 'selected-user'
+}
+
+const fetchMessages = id => {
+    const limit = 30;
+    const messagesRequest = new CometChat.MessagesRequestBuilder().setUID(id).setLimit(limit).build();
+
+    messagesRequest.fetchPrevious().then(
+        messages => {
+            const messageDiv = document.getElementById('messages')
+            messageDiv.innerHTML = messages.map(msg => `<div>${msg.text}</div>`).join('')
+        },
+        error => {
+            console.log("Message fetching failed with error:", error);
+        }
+    );
+}
+
+const sendMessage = () => {
+    const recipient_id = document.getElementsByClassName('selected-user')[0].id;
+    const message_text = document.getElementsByName('message[text]')[0].value;
+
+    const messageType = CometChat.MESSAGE_TYPE.TEXT;
+    const receiverType = CometChat.RECEIVER_TYPE.USER;
+    const textMessage = new CometChat.TextMessage(recipient_id, message_text, messageType, receiverType);
+
+    CometChat.sendMessage(textMessage).then(
+        message => displayNewMessage(message),
+        error => {
+            console.log("Message sending failed with error:", error);
+        }
+    );
+}

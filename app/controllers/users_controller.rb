@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if user.save && CometChatService.new(user).request_uid
+    if user.save && CometChatService.new(user).create_user
       message = 'Your user was saved. You are ready to start chatting!'
       redirect_to @user, alert: message
     else
@@ -16,6 +16,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @users = CometChatService.new(user).fetch_users
+                             .reject { |u| u['uid'] == @user.id.to_s }
+                             .map { |u| [u['name'], u['uid']] }
   end
 
   private
