@@ -1,34 +1,43 @@
 <% content_for :title, @user.name %>
-<%= tag("div", id: 'user-id', :data => {:name => @user.name, :id => @user.id}) %>
-
-<p>Hello there <%= @user.name %></p>
-<% flash.each do |key, value| %>
-  <div class="alert alert-<%= key %>"><%= value %></div>
-<% end %>
-
-<%= form_for :message, :html => { :onsubmit => 'sendMessage();' }, remote: true do |f| %>
-  Message : <%= f.text_area :text %><br/>
-  <%= f.submit 'Send message' %>
-<% end %>
-
-<% @users.each do |user| %>
-  <div id="<%= user[1] %>" name='user-select'>
-    <%= user[0] %>
+<div class="inner-container">
+  <div class="header">
+    <p>Hello there <%= @user.name %></p>
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
   </div>
-<% end %>
+  <div class="main-body">
+    <div class="left-column">
+      <% @users.each do |user| %>
+        <div id="<%= user[1] %>" name='user-select'>
+          <%= user[0] %>
+        </div>
+      <% end %>
+    </div>
 
-<h1>Messages</h1>
-<div id="message-container">
-  <div id="messages">
-    Messages loading...
+    <div class="right-column">
+      <div id="message-container">
+        <div id="messages">
+          Messages loading...
+        </div>
+      </div>
+      <%= form_for :message, :html => { :onsubmit => 'sendMessage();' } do |f| %>
+        Message : <%= f.text_area :text %><br/>
+        <%= f.submit 'Send message' %>
+      <% end %>
+    </div>
   </div>
 </div>
 
+<%= tag("div", id: 'user-id', :data => { :name => @user.name, :id => @user.id }) %>
 <% javascript_include_tag 'show', :cache => 'myfiles' %>
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat/CometChat.js"></script>
 
 <script type="text/javascript">
-
+    window.onload = (function () {
+        console.log('comet chat trying to initialize')
+        initializeChat();
+    })
 </script>
 
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pulse/cometchat-pulse.js/CometChat.js"></script>
