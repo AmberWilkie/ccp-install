@@ -1,0 +1,10 @@
+<div class="users-select">
+  Hi! Are you ready to chat? Pick your name below. Or perhaps you'd prefer to <%= link_to 'create a new user', new_user_path %>?
+  <% @users.each do|user| %>
+    <div class="select-user">
+      <%= link_to user do %>
+        <%= user.name %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
