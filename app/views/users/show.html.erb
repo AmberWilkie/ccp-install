@@ -1,34 +1,61 @@
 <% content_for :title, @user.name %>
-<%= tag("div", id: 'user-id', :data => {:name => @user.name, :id => @user.id}) %>
-
-<p>Hello there <%= @user.name %></p>
+<h5 class="mb-1">
+  Hello there <%= @user.name %>
+</h5>
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
-<%= form_for :message, :html => { :onsubmit => 'sendMessage();' }, remote: true do |f| %>
-  Message : <%= f.text_area :text %><br/>
-  <%= f.submit 'Send message' %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="card col-sm-4" style="overflow:scroll;">
+      <ul class="list-group list-group-flush">
+        <% @users.each do |user| %>
+          <li class="list-group-item" id="<%= user[1] %>" name='user-select'>
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1"><%= user[0] %></h5>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 
-<% @users.each do |user| %>
-  <div id="<%= user[1] %>" name='user-select'>
-    <%= user[0] %>
-  </div>
-<% end %>
 
-<h1>Messages</h1>
-<div id="message-container">
-  <div id="messages">
-    Messages loading...
+    <div class="col-sm-8">
+      <div class="chatbody">
+
+        <table class="table">
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+        <div id="messages" class="messages">
+          Messages loading...
+        </div>
+      </div>
+
+      <div class="row col-sm-8">
+        <%= form_for :message, remote: true do |f| %>
+          <div class="col-xs-9">
+            Message : <%= f.text_area :text, class: "form-control" %><br/>
+          </div>
+          <div class="col-xs-3">
+            <%= button_tag "Send Message", :type => 'button', :onclick => "javascript:sendMessage()", class: "btn btn-info btn-block" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
+<%= tag("div", id: 'user-id', :data => { :name => @user.name, :id => @user.id }) %>
 <% javascript_include_tag 'show', :cache => 'myfiles' %>
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat/CometChat.js"></script>
-
-<script type="text/javascript">
-
-</script>
-
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pulse/cometchat-pulse.js/CometChat.js"></script>
+<script type="text/javascript">
+//     window.onload = (function () {
+//         console.log('comet chat trying to initialize')
+//         initializeChat();
+//     })
+    document.addEventListener('turbolinks:load', () => setTimeout(initializeChat, 250));
+</script>
