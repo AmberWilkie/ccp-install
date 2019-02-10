@@ -17,8 +17,9 @@ const addMessageListener = () => {
 )}
 
 const loginUser = () => {
-    const id = document.getElementById('user-id').dataset.id;
-    console.log(id);
+    const userDiv = document.getElementById('user-id');
+    if (!userDiv) { return true }
+    const id = userDiv.dataset.id;
     CometChat.login(id, '<%= ENV['COMETCHAT_API_KEY'] %>').then(
         User => {
         fetchMessages(<%= (@users || []).first&.second %>);
@@ -33,10 +34,11 @@ const loginUser = () => {
 const initializeChat = () => {
     CometChat.init('<%= ENV['COMETCHAT_APP_ID'] %>').then(
         hasInitialized => {
-            const users = document.getElementsByName('user-select')
+            const users = document.getElementsByName('user-select');
             users.forEach(u => u.addEventListener("click", e => {
-                fetchMessages(e.target.id);
-                setUser(e.target.id)
+                const id = e.target.id || e.target.offsetParent.id
+                fetchMessages(id);
+                setUser(id)
             }));
 
             loginUser()
@@ -47,9 +49,9 @@ const initializeChat = () => {
     )};
 
 const setUser = id => {
-    const previousDivs = Array.from(document.getElementsByClassName('selected-user'))
+    const previousDivs = Array.from(document.getElementsByClassName('selected-user'));
     previousDivs.forEach(div => div.className = div.className.replace(/\bselected-user\b/,''))
-    const userDiv = document.getElementById(id)
+    const userDiv = document.getElementById(id);
     userDiv.className += ' selected-user'
 }
 

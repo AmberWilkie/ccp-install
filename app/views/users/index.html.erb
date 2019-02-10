@@ -4,7 +4,7 @@
   </div>
   <% @users.each do |user| %>
     <div class="select-user">
-      <%= link_to user do %>
+      <%= link_to user, { 'data-no-turbolink':  "true" } do %>
         <%= user.name %>
       <% end %>
     </div>

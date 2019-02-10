@@ -20,9 +20,8 @@ This example app shows how to build one-on-one chats with Comet Chat Pro.
 - ~~Install chat, use forms to send messages~~
 - ~~List users, create chat page~~
 - ~~Get messages via form.~~
-- Index page to list and select a user.
+- ~~Index page to list and select a user.~~
 - Basic styling
-
 
 
 SCREENSHOTS
@@ -34,7 +33,8 @@ This demo uses:
 
 * CometChat Pro
 * Ruby on Rails 5.2.1
-* ? 
+* [Bootstrap](https://github.com/twbs/bootstrap-rubygem)
+* [Styling](https://bootsnipp.com/snippets/exZX3)
 
 ## Running the demo locally
 * Download the repository [here](https://github.com/cometchat-pro/javascript-reactjs-chat-app.git) or by running `git clone https://github.com/cometchat-pro/javascript-reactjs-chat-app.git`
