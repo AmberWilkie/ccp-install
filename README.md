@@ -14,7 +14,10 @@ Here's how I progressed through this app. If you wanted to start from scratch, y
 - Add Javascript listener for grabbing new messages. Further, append new sent messages to the message list.
 - Style
 
-SCREENSHOTS
+
+## Screenshots
+[screenshot 1](screenshot1.png)
+[screenshot 2](screenshot2.png)
 
 ## Technology
 This demo uses:
@@ -27,12 +30,13 @@ This demo uses:
 ## Running the demo locally
 * Download the repository [here](https://github.com/AmberWilkie/ccp-install) or by running `git clone https://github.com/AmberWilkie/ccp-install`
 * `bundle install` to download dependencies
+* `rails db:migrate RAILS_ENV=development` to migrate your database to allow user creation.
 * Create a `.env` file in the root of your folder with your CometChatPro credentials. It should look like this:
 ```ruby
 COMETCHAT_APP_ID=23n2f2n3p2y3
 COMETCHAT_API_KEY=av22g24ll
 ```
-* `ruby -s p4000` will start your local server.
+* `rails s -p4000` will start your local server.
 * Go to `localhost:4000` to get started!
 
 ## Other examples
