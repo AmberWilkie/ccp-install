@@ -49,10 +49,11 @@ const initializeChat = () => {
     )};
 
 const setUser = id => {
-    const previousDivs = Array.from(document.getElementsByClassName('selected-user'));
-    previousDivs.forEach(div => div.className = div.className.replace(/\bselected-user\b/,''))
+    const previousDivs = Array.from(document.getElementsByClassName('bg-info'));
+    previousDivs.forEach(div => div.className = div.className.replace(/\bbg-info\b/,''));
     const userDiv = document.getElementById(id);
-    userDiv.className += ' selected-user'
+    console.log(userDiv);
+    userDiv.className = 'list-group-item bg-info'
 }
 
 const fetchMessages = id => {
