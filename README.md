@@ -16,8 +16,8 @@ Here's how I progressed through this app. If you wanted to start from scratch, y
 
 
 ## Screenshots
-[screenshot 1](screenshot1.png)
-[screenshot 2](screenshot2.png)
+[screenshot 1](https://raw.githubusercontent.com/AmberWilkie/ccp-install/master/app/assets/images/screenshot1.png)
+[screenshot 2](https://raw.githubusercontent.com/AmberWilkie/ccp-install/master/app/assets/images/screenshot2.png)
 
 ## Technology
 This demo uses:
