@@ -6,6 +6,7 @@ const displayNewMessage = msg => {
                        </div>`
     const messageDiv = document.getElementById('messages')
     messageDiv.appendChild(newNode)
+    messageDiv.scrollTop = messageDiv.scrollHeight
 }
 
 const addMessageListener = () => {
@@ -53,7 +54,7 @@ const setUser = id => {
     previousDivs.forEach(div => div.className = div.className.replace(/\bbg-info\b/,''));
     const userDiv = document.getElementById(id);
     console.log(userDiv);
-    userDiv.className = 'list-group-item bg-info'
+    userDiv.className = 'list-group-item bg-info user-select'
 }
 
 const fetchMessages = id => {
@@ -62,14 +63,14 @@ const fetchMessages = id => {
 
     messagesRequest.fetchPrevious().then(
         messages => {
-            const messageDiv = document.getElementById('messages')
-        console.log(messages)
+            const messageDiv = document.getElementById('messages');
             messageDiv.innerHTML = messages.length > 0 ?
-              messages.map(msg => `<div class='message'>
+              messages.map(msg => `<div class='message ${msg.sender.uid !== id && 'self'}'>
                     <div class='message-text'>${msg.text}</div>
                     <div class='message-sender'>- ${msg.sender.name}</div>
                    </div>`).join('') :
-              `<div class="whisper">Start of message history</div>`
+              `<div class="whisper">Start of message history</div>`;
+            messageDiv.scrollTop = messageDiv.scrollHeight
         },
         error => {
             console.log("Message fetching failed with error:", error);
@@ -78,7 +79,7 @@ const fetchMessages = id => {
 }
 
 const sendMessage = () => {
-    const recipient_id = document.getElementsByClassName('selected-user')[0].id;
+    const recipient_id = document.getElementsByClassName('bg-info')[0].id;
     const message_text = document.getElementsByName('message[text]')[0].value;
     document.getElementsByName('message[text]')[0].value = ''
 
