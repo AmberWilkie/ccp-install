@@ -3,8 +3,7 @@ class UsersController < ApplicationController
     @users = CometChatService.new.fetch_users
   end
 
-  def new
-  end
+  def new; end
 
   def create
     user = CometChatService.new(user_params).create_user
@@ -21,7 +20,7 @@ class UsersController < ApplicationController
     users = CometChatService.new.fetch_users
     @user = users.find { |u| u['uid'] == params[:id] }
     @users = users.reject { |u| u['uid'] == @user['uid'] }
-               .map { |u| [u['name'], u['uid']] }
+                  .map { |u| [u['name'], u['uid']] }
   end
 
   private
