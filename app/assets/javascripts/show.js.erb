@@ -1,6 +1,9 @@
 const displayNewMessage = msg => {
+    const userDiv = document.getElementById('user-id');
+    const id = userDiv.dataset.id;
     const newNode = document.createElement("div")
-    newNode.innerHTML = `<div class='message'>
+    console.log(msg.sender.uid)
+    newNode.innerHTML = `<div class='message ${msg.sender.uid === id && 'self'}'>
                         <div class='message-text'>${msg.text}</div>
                         <div class='message-sender'>- ${msg.sender.name}</div>
                        </div>`
@@ -23,7 +26,7 @@ const loginUser = () => {
     const id = userDiv.dataset.id;
     CometChat.login(id, '<%= ENV['COMETCHAT_API_KEY'] %>').then(
         User => {
-        fetchMessages(<%= (@users || []).first&.second %>);
+        fetchMessages(<%= (@users || []).first&['uid'] %>);
     addMessageListener()
 },
     error => {
@@ -53,7 +56,6 @@ const setUser = id => {
     const previousDivs = Array.from(document.getElementsByClassName('bg-info'));
     previousDivs.forEach(div => div.className = div.className.replace(/\bbg-info\b/,''));
     const userDiv = document.getElementById(id);
-    console.log(userDiv);
     userDiv.className = 'list-group-item bg-info user-select'
 }
 

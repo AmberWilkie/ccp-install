@@ -12,12 +12,12 @@ gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
+gem 'coffee-rails', '~> 4.2'
 gem 'httparty'
 gem 'jquery-rails'
+gem 'turbolinks', '~> 5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
