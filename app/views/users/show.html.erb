@@ -1,6 +1,6 @@
-<% content_for :title, @user.name %>
+<% content_for :title, @user['name'] %>
 <h5 class="mb-1">
-  Hello there <%= @user.name %>
+  Hello there <%= @user['name'] %>
 </h5>
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<%= tag("div", id: 'user-id', :data => { :name => @user.name, :id => @user.id }) %>
+<%= tag("div", id: 'user-id', :data => { :name => @user['name'], :id => @user['uid'] }) %>
 <% javascript_include_tag 'show', :cache => 'myfiles' %>
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat/CometChat.js"></script>
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pulse/cometchat-pulse.js/CometChat.js"></script>

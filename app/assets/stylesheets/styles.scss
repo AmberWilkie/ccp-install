@@ -14,6 +14,40 @@
   background-color: gray;
   size: 5rem;
 }
+
+.user-select, .selected-user {
+  text-transform: uppercase;
+  &:hover {
+    background-color: lightgray !important;
+  }
+}
+
+.messages {
+  max-height: 25rem;
+  overflow-y: scroll;
+  border: 1px solid lightgray;
+  padding: .5rem;
+}
+
+.message {
+  text-align: right;
+  background-color: lightpink;
+  margin: .5rem 0 .5rem 0;
+  width: fit-content;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: .5rem;
+
+  &.self {
+    background-color: lightblue;
+  }
+}
+
+.sender {
+  font-size: 80%;
+}
+
 //
 //.chatperson {
 //    border-bottom: 1px solid #eee;
