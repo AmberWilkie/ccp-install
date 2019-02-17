@@ -2,17 +2,17 @@ class CometChatService
   include HTTParty
   BASE_URI = 'https://api.cometchat.com/v1'.freeze
 
-  def initialize(user)
-    @user = user
+  def initialize(params = nil)
+    @params = params
   end
 
   def create_user
     body = {
-      uid: user.id,
-      name: user.name
+      uid: params['name'],
+      name: params['name']
     }
     response = HTTParty.post("#{BASE_URI}/users", headers: headers, body: body)
-    response.dig('data', 'uid') == user.id.to_s
+    response.dig('data')
   end
 
   def fetch_users
@@ -22,7 +22,7 @@ class CometChatService
 
   private
 
-  attr_accessor :user
+  attr_accessor :params
 
   def headers
     {

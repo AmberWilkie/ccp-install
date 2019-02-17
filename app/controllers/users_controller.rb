@@ -1,17 +1,15 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all
+    @users = CometChatService.new.fetch_users
   end
 
-  def new
-    @user = User.new
-  end
+  def new; end
 
   def create
-    @user = User.new(user_params)
-    if user.save && CometChatService.new(user).create_user
+    user = CometChatService.new(user_params).create_user
+    if user['uid']
       message = 'Your user was saved. You are ready to start chatting!'
-      redirect_to @user, alert: message
+      redirect_to user_path(user['uid']), alert: message
     else
       message = 'Sorry, that did not work'
       redirect_to new_user_path, alert: message
@@ -19,17 +17,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @users = CometChatService.new(user).fetch_users
-                             .reject { |u| u['uid'] == @user.id.to_s }
-                             .map { |u| [u['name'], u['uid']] }
+    users = CometChatService.new.fetch_users
+    @user = users.find { |u| u['uid'] == params[:id] }
+    @users = users.reject { |u| u['uid'] == @user['uid'] }
+                  .map { |u| [u['name'], u['uid']] }
   end
 
   private
-
-  def user
-    @user ||= User.new
-  end
 
   def user_params
     params.require(:user).permit(:name)

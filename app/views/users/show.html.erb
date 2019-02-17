@@ -1,6 +1,6 @@
-<% content_for :title, @user.name %>
+<% content_for :title, @user['name'] %>
 <h5 class="mb-1">
-  Hello there <%= @user.name %>
+  Hello there <%= @user['name'] %>
 </h5>
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
@@ -11,7 +11,7 @@
     <div class="card col-sm-4" style="overflow:scroll;">
       <ul class="list-group list-group-flush">
         <% @users.each do |user| %>
-          <li class="list-group-item bg-light" id="<%= user[1] %>" name='user-select'>
+          <li class="list-group-item bg-light user-select" id="<%= user[1] %>" name='user-select'>
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1"><%= user[0] %></h5>
             </div>
@@ -39,7 +39,7 @@
           <div class="col-xs-9">
             Message : <%= f.text_area :text, class: "form-control" %><br/>
           </div>
-          <div class="col-xs-3">
+          <div class="col-xs-3 capitalize">
             <%= button_tag "Send Message", :type => 'button', :onclick => "javascript:sendMessage()", class: "btn btn-info btn-block" %>
           </div>
         <% end %>
@@ -48,14 +48,10 @@
   </div>
 </div>
 
-<%= tag("div", id: 'user-id', :data => { :name => @user.name, :id => @user.id }) %>
+<%= tag("div", id: 'user-id', :data => { :name => @user['name'], :id => @user['uid'] }) %>
 <% javascript_include_tag 'show', :cache => 'myfiles' %>
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat/CometChat.js"></script>
 <script type="text/javascript" src="https://unpkg.com/@cometchat-pulse/cometchat-pulse.js/CometChat.js"></script>
 <script type="text/javascript">
-//     window.onload = (function () {
-//         console.log('comet chat trying to initialize')
-//         initializeChat();
-//     })
     document.addEventListener('turbolinks:load', () => setTimeout(initializeChat, 250));
 </script>
