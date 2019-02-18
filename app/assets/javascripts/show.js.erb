@@ -2,7 +2,6 @@ const displayNewMessage = msg => {
     const userDiv = document.getElementById('user-id');
     const id = userDiv.dataset.id;
     const newNode = document.createElement("div")
-    console.log(msg.sender.uid)
     newNode.innerHTML = `<div class='message ${msg.sender.uid === id && 'self'}'>
                         <div class='message-text'>${msg.text}</div>
                         <div class='message-sender'>- ${msg.sender.name}</div>
