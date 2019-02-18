@@ -30,7 +30,7 @@ This demo uses:
 ## Running the demo locally
 * Download the repository [here](https://github.com/AmberWilkie/ccp-install) or by running `git clone https://github.com/AmberWilkie/ccp-install`
 * `bundle install` to download dependencies
-* Create a `.env` file in the root of your folder with your CometChatPro credentials. It should look like this:
+* Create a `.env` file in the root of your folder with your CometChatPro credentials (make sure they are 'full access' and not 'auth only'). It should look like this:
 ```ruby
 COMETCHAT_APP_ID=23n2f2n3p2y3
 COMETCHAT_API_KEY=av22g24ll
